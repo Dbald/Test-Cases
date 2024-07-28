@@ -41,7 +41,7 @@
 
 <!-- HERO -->
     <section id="hero" class="hero-section">
-        <div class="aframe-background">
+        <div class="aframe-background" id="aframeScene">
             <a-scene embedded>
                 <a-sky color="black"></a-sky>
                 <a-entity id="city"></a-entity>
@@ -303,6 +303,7 @@
       } else {
         // Handle non-iOS 13+ devices
         document.getElementById('customPermissionOverlay').style.display = 'none';
+        document.getElementById('aframeScene').style.zIndex = -1;
         window.addEventListener('devicemotion', (event) => {
           // Handle motion events
         });
