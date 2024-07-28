@@ -309,7 +309,9 @@
 
     function enableMotionFeatures() {
       document.getElementById('customPermissionOverlay').style.display = 'none';
-      document.getElementById('aframeScene').style.zIndex = -1;
+      setTimeout(() => {
+                document.getElementById('aframeScene').style.zIndex = -1;
+              }, 2000); // 2-second delay before changing the z-index
       window.addEventListener('devicemotion', handleMotion);
     }
 
