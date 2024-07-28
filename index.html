@@ -286,29 +286,41 @@
         // Generate city with 100 buildings
         generateCity(100);
 
+        // Motion Permission
+
         function requestMotionPermission() {
       if (typeof DeviceMotionEvent.requestPermission === 'function') {
         DeviceMotionEvent.requestPermission()
           .then(permissionState => {
             if (permissionState === 'granted') {
               document.getElementById('customPermissionOverlay').style.display = 'none';
-              window.addEventListener('devicemotion', (event) => {
-                // Handle motion events
-              });
+              document.getElementById('aframeScene').style.zIndex = -1;
+              window.addEventListener('devicemotion', handleMotion);
             } else {
               alert('Permission to access device motion sensors denied.');
             }
           })
           .catch(console.error);
       } else {
-        // Handle non-iOS 13+ devices
+        // Handle non-iOS 13+ devices or devices that don't need explicit permission
         document.getElementById('customPermissionOverlay').style.display = 'none';
         document.getElementById('aframeScene').style.zIndex = -1;
-        window.addEventListener('devicemotion', (event) => {
-          // Handle motion events
-        });
+        window.addEventListener('devicemotion', handleMotion);
       }
     }
+
+    function handleMotion(event) {
+      // Handle motion events here
+    }
+
+    // Check if the device is mobile and if it requires permission for motion sensors
+    window.addEventListener('load', () => {
+      if (typeof DeviceMotionEvent.requestPermission !== 'function') {
+        // Non-iOS devices or older iOS versions that don't require permission
+        document.getElementById('customPermissionOverlay').style.display = 'none';
+        document.getElementById('aframeScene').style.zIndex = -1;
+      }
+    });
       </script>
 
 </body>
