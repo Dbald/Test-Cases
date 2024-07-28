@@ -50,6 +50,11 @@
                 </a-entity>
               </a-scene>
         </div>
+        <div class="custom-permission-overlay" id="customPermissionOverlay">
+            <h1>Immersive Website</h1>
+            <p>This immersive website requires access to your device motion sensors.</p>
+            <button onclick="requestMotionPermission()">Grant Access</button>
+          </div>
         <div class="hero-content">
             <img id="hero-logo" src="https://www.mixxreality.com/img/icon_white.png" alt="Icon">
             <h2>Mixx Reality is spatial project management. Check it out.</h2>
@@ -280,6 +285,29 @@
   
         // Generate city with 100 buildings
         generateCity(100);
+
+        function requestMotionPermission() {
+      if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+          .then(permissionState => {
+            if (permissionState === 'granted') {
+              document.getElementById('customPermissionOverlay').style.display = 'none';
+              window.addEventListener('devicemotion', (event) => {
+                // Handle motion events
+              });
+            } else {
+              alert('Permission to access device motion sensors denied.');
+            }
+          })
+          .catch(console.error);
+      } else {
+        // Handle non-iOS 13+ devices
+        document.getElementById('customPermissionOverlay').style.display = 'none';
+        window.addEventListener('devicemotion', (event) => {
+          // Handle motion events
+        });
+      }
+    }
       </script>
 
 </body>
